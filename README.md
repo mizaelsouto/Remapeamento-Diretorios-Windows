@@ -1,44 +1,50 @@
-O script tem como objetivo remapear as pastas do Windows 10 ou 11 (Documentos, Área de Trabalho, Downloads, Imagens, Vídeos e Músicas), independentemente do idioma, apontando-as para uma unidade secundária. Isso é extremamente útil para quem possui um SSD pequeno (128 GB ou 250 GB) como unidade C:, dedicada apenas ao sistema operacional e programas. Ao definir uma unidade secundária (como a letra E:), o armazenamento de arquivos torna-se automático. A grande vantagem é eliminar a necessidade de copiar ou mover arquivos manualmente, otimizando a organização e o desempenho do sistema.
+# 📁 Remapeamento e Migração de Diretórios de Usuários no Windows (`PowerShell`)
 
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1_%7C_7+-5391FE?style=for-the-badge&logo=powershell&logoColor=white)
+![Windows](https://img.shields.io/badge/Windows-10_%7C_11-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)
 
+Suíte de scripts em **PowerShell** para **Windows 10 e Windows 11** projetada para redirecionar, restaurar e migrar automaticamente as pastas de perfil do usuário (*Documentos, Área de Trabalho, Downloads, Imagens, Vídeos e Músicas*) para uma unidade secundária (`D:`, `E:`, etc.), independentemente do idioma do sistema operacional.
 
-Guia de Scripts de Gerenciamento de Usuários
-Abaixo estão as descrições detalhadas de cada script e suas respectivas funcionalidades.
+Ideal para computadores com **SSDs pequenos (128 GB ou 250 GB)** na unidade `C:`, mantendo o sistema operacional leve e automatizando a gravação de arquivos na unidade de dados sem necessidade de mover pastas manualmente.
 
-1. Redirect-UserFolders
+---
 
-Este script redireciona os diretórios do usuário da unidade C: para outra unidade de destino (identificada por uma LETRA específica). Uma vez configurado, todo o conteúdo novo será armazenado automaticamente nesta nova unidade.
+## 🛠️ Scripts Disponíveis e Documentação Detalhada
 
-Segurança: Devido às alterações profundas no sistema, o script gera automaticamente um Ponto de Restauração e um arquivo de backup. Confirme se o ponto de restauração foi criado com sucesso antes de avançar.
+| Script PowerShell | Guia Específico | Função Principal |
+| :--- | :--- | :--- |
+| **`Redirect-UserFolders.ps1`** | [📖 Ler Guia de Redirecionamento](./README-Redirect-Folders.md) | Redireciona as pastas do usuário da unidade `C:` para outra unidade (`D:`, `E:`). Cria automaticamente Ponto de Restauração e backup do Registro. |
+| **`Restore-UserFolders.ps1`** | [📖 Ler Guia de Restauração](./README-Restore-Folders.md) | Reverte o redirecionamento, restaurando os caminhos originais das pastas de usuário no Registro do Windows. |
+| **`Copy-WindowsUsers.ps1`** | [📖 Ler Guia de Cópia/Migração](./README-Copy-Users.md) | Auxilia em cenários de formatação e manutenção, copiando de forma estruturada os dados de usuários de uma instalação antiga para uma nova. |
 
-Restrição de Localização: O script não deve ser executado a partir de pastas do usuário ou diretórios que serão redirecionados. Ele deve estar localizado na raiz do Drive C: ou em um pendrive.
+---
 
-2. Restore-UserFolders
+## 🚀 Boas Práticas de Execução
 
-Este script é utilizado para reverter o processo. Ele tenta desfazer as modificações realizadas no Registro do Windows, buscando restaurar os caminhos padrão das pastas do sistema.
+1. **Permissões de Administrador:** Execute sempre o PowerShell como **Administrador**.
+2. **Localização do Script:** No caso do `Redirect-UserFolders.ps1`, execute-o a partir da raiz `C:\` ou de um pendrive (nunca de dentro de uma pasta que será movida, como *Desktop* ou *Downloads*).
+3. **Ponto de Restauração:** Confirme a criação do Ponto de Restauração antes de prosseguir com alterações de Registro.
 
-3. Copy-WindowsUser
+```powershell
+# Exemplo de liberação temporária de execução na sessão atual do PowerShell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
-Script voltado para cenários de manutenção e formatação. Ele facilita a migração ao copiar os arquivos do usuário de uma instalação antiga para uma nova instalação de forma organizada.
+# Executar o redirecionamento
+.\Redirect-UserFolders.ps1
+```
 
-⚠️ Termo de Responsabilidade e Isenção de Danos
+---
 
-O uso destes scripts é de total e exclusiva responsabilidade do usuário.
+## ⚠️ Termo de Responsabilidade e Isenção de Danos
 
-Isenção de Garantia: O desenvolvedor não fornece garantias de qualquer tipo quanto ao funcionamento ou compatibilidade absoluta com todas as versões do Windows.
+O uso destes scripts é de total e exclusiva responsabilidade do usuário:
+- **Isenção de Garantia:** O desenvolvedor não fornece garantias quanto à compatibilidade absoluta com ambientes customizados.
+- **Backup Prévio:** Recomenda-se fortemente possuir um **backup externo** dos seus dados importantes antes de executar qualquer script que altere o Registro ou mova diretórios de sistema.
 
-Limitação de Responsabilidade: O desenvolvedor não se responsabiliza por:
+---
 
-Erros de execução causados por mau uso.
+## 📄 Licença & Autor
 
-Perda total ou parcial de arquivos e dados pessoais.
-
-Falhas no sistema operacional, instabilidades ou telas azuis (BSOD).
-
-Quaisquer danos diretos ou indiretos resultantes do uso destas ferramentas.
-
-Recomenda-se fortemente possuir um backup físico e externo dos seus dados importantes antes de executar qualquer script que altere o Registro ou mova diretórios do sistema.
-
-Instruções Adicionais
-
-Cada script acompanha um arquivo Readme específico. Leia as instruções contidas neles para saber os comandos exatos de execução.
+Distribuído sob a licença **MIT** ([LICENSE](./LICENSE)).  
+Desenvolvido por **Mizael Souto** (`@mizaelsouto`) — [LinkedIn](https://www.linkedin.com/in/mizaelsouto)
